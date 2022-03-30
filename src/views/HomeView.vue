@@ -47,3 +47,11 @@ function showModal(): void {
     <TheWelcome />
   </main>
 </template>
+
+<style lang="scss" scoped>
+  .btn-primary {
+    color: $primary-red;
+
+    @include hover-active
+  }
+</style>
