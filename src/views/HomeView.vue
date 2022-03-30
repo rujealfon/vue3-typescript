@@ -21,6 +21,8 @@ function showModal(): void {
       A simple primary alert—check it out!
     </div>
 
+      <span class="icon-Settings_Sub_AppointmentType"></span>
+
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" @click="showModal()">
       Launch demo modal
