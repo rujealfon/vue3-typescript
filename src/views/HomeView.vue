@@ -2,12 +2,22 @@
 import { ref, onMounted } from 'vue'
 import TheWelcome from '@/components/TheWelcome.vue'
 import { Modal } from 'bootstrap'
+import axios from '@/services/api/axios.service'
 
 const exampleModal = ref(null)
 let modal: any = null
 
 onMounted(()=> {
   modal = new Modal(exampleModal.value)
+
+  axios
+    .get('/users/rujealfon')
+    .then((response) => {
+      console.log('response: ', response.data)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
 })
 
 function showModal(): void {
