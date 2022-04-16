@@ -1,28 +1,37 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import TheWelcome from '@/components/TheWelcome.vue'
-import { Modal } from 'bootstrap'
-import axios from '@/services/api/axios.service'
+  import { ref, onMounted } from 'vue'
+  import TheWelcome from '@/components/TheWelcome.vue'
+  import { Modal } from 'bootstrap'
+  import { getCurrentInstance } from 'vue'
+  import { useCounterStore } from '@/stores/counter';
 
-const exampleModal = ref(null)
-let modal: any = null
+  const app = getCurrentInstance()
+  const  { $http, $api }  = app.appContext.config.globalProperties
 
-onMounted(()=> {
-  modal = new Modal(exampleModal.value)
+  const exampleModal = ref(null)
+  let modal: any = null
 
-  axios
-    .get('/users/rujealfon')
-    .then((response) => {
-      console.log('response: ', response.data)
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-})
+  const counter = useCounterStore()
 
-function showModal(): void {
-  modal.show()
-}
+  console.log(counter.counter)
+
+  onMounted(()=> {
+    modal = new Modal(exampleModal.value)
+
+      $api.auth.user()
+
+      $http.get('/users/rujealfon')
+      .then((response) => {
+        console.log('response: ', response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  })
+
+  function showModal(): void {
+    modal.show()
+  }
 </script>
 
 <template>
@@ -36,6 +45,12 @@ function showModal(): void {
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" @click="showModal()">
       Launch demo modal
+    </button>
+
+
+    <button type="button" class="btn btn-primary" @click="counter.increment()">
+      {{counter.doubleCount}}
+      {{counter.counter}}
     </button>
 
    <!-- Modal -->

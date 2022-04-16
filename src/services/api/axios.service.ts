@@ -1,6 +1,6 @@
 import Axios, { AxiosInstance } from 'axios'
 
-const baseURL = 'https://api.github.com'
+const baseURL = import.meta.env.VITE_GITHUB_URL
 
 const axios: AxiosInstance = Axios.create({
   baseURL,
