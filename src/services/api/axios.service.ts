@@ -1,8 +1,9 @@
 import Axios from 'axios'
 import type { AxiosInstance} from 'axios'
+// import { useAuthStore } from '@/stores/auth.store';
 
 const axios: AxiosInstance = Axios.create({
-  baseURL: import.meta.env.VITE_GITHUB_URL
+  baseURL: import.meta.env.VITE_API_URL
 })
 
 axios.interceptors.request.use(
@@ -10,6 +11,13 @@ axios.interceptors.request.use(
     /**
      * you can do something here
      */
+    // const authStore = useAuthStore()
+
+    if (sessionStorage.getItem('access_token')) {
+      // set the authentication bearer
+      config.headers.common.Authorization = sessionStorage.getItem('access_token')
+    }
+
     return config
   },
   (error) => {

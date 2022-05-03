@@ -1,9 +1,5 @@
 import BaseService from "@/services/api/base.service"
-
-interface Login {
-  username: string;
-  password: string;
-}
+import type { Login } from "@/models/login.model"
 
 class AuthService extends BaseService {
   constructor() {
@@ -11,11 +7,11 @@ class AuthService extends BaseService {
   }
 
    login(payload: Login) {
-    return this.axios.post(`/login`, payload)
+    return this.axios.post(`${this.base}/login`, payload)
   }
 
   logout() {
-    return this.axios.get(`/logout`)
+    return this.axios.get(`${this.base}/logout`)
   }
 
   user() {
