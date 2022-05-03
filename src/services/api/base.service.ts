@@ -1,77 +1,33 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import axios from '@/services/api/axios.service';
 
-interface RefreshToken {
-  status: number;
-  data: {
-    hashToken: string;
-  };
-}
+export default class BaseService {
+  protected axios = axios
 
-export abstract class HTTPBaseService {
-    protected instance: AxiosInstance;
-    protected token: string;
-    protected readonly baseURL: string;
+  constructor(
+    public base: string
+  ) {}
 
-    public constructor(baseURL: string, token: string) {
-        this.baseURL = baseURL;
-        this.instance = axios.create({
-            baseURL
-        });
-        this.token = token;
+  search(params) {
+    return this.axios.get(`${this.base}`, { params })
+  }
 
-        this.initializeRequestInterceptor();
-        this.initializeResponseInterceptor();
-    }
+  detail(id: number) {
+    return this.axios.get(`${this.base}/${id}`)
+  }
 
-    private initializeRequestInterceptor = () => {
-        this.instance.interceptors.request.use(this.handleRequest);
-    };
+  create(payload) {
+    return this.axios.post(`${this.base}`, payload)
+  }
 
-    private initializeResponseInterceptor = () => {
-        this.instance.interceptors.response.use(response => {
-            if (response.headers && response.headers.authorization) {
-                const responseToken = (response.headers.authorization as string).split(' ')[1];
-                this.token = responseToken;
+  update(payload) {
+    return this.axios.put(`${this.base}/${payload.id}`, payload)
+  }
 
-                localStorage.setItem('hashToken', this.token);
-            }
-            return response;
-        }, this.handleError);
-    }
+  delete(id: number) {
+    return this.axios.delete(`${this.base}/${id}`)
+  }
 
-    private handleRequest = (config: AxiosRequestConfig) => {
-        config.headers['Authorization'] = `Bearer ${this.token}`;
-        return config;
-    };
-
-    private handleError = async (error: AxiosError) => {
-        const originalRequest = error.config;
-        if (error.response?.status === 401) {
-            const refreshToken = await this.refreshToken();
-            if (refreshToken.status === 200) {
-                this.token = refreshToken.data.hashToken;
-                localStorage.setItem('hashToken', this.token);
-                return this.instance(originalRequest);
-            }
-        }
-    }
-
-    private async refreshToken(): Promise<RefreshToken> {
-        const refreshTokenRequest = {
-            hashToken: this.token
-        };
-
-        const { data } = await this.addRequestOptionsForClientSecrect();
-        const options: AxiosRequestConfig = {
-            headers: {
-                CLIENT_KEY: data.clientKey
-            }
-        };
-
-        return axios.post(`${this.baseURL}/User/RenewToken`, refreshTokenRequest, options);
-    }
-
-    private addRequestOptionsForClientSecrect() {
-        return axios.get(`${this.baseURL}/Utility/GetSecrets`);
-    }
+  // restore(id) {
+  //   return this.axios.$put(`${this.base}/${id}`)
+  // }
 }

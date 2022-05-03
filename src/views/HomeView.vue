@@ -5,6 +5,8 @@
   import { getCurrentInstance } from 'vue'
   import { useCounterStore } from '@/stores/counter';
 
+  import type { AxiosResponse, AxiosError } from 'axios'
+
   const app = getCurrentInstance()
   const  { $http, $api }  = app.appContext.config.globalProperties
 
@@ -18,13 +20,13 @@
   onMounted(()=> {
     modal = new Modal(exampleModal.value)
 
-      $api.auth.user()
+      // $api.auth.user()
 
       $http.get('/users/rujealfon')
-      .then((response) => {
+      .then((response: AxiosResponse) => {
         console.log('response: ', response.data)
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         console.error(error)
       })
   })

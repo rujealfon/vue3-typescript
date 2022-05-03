@@ -1,12 +1,16 @@
-import Repository from "@/repository"
+import BaseService from "@/services/api/base.service"
 
 interface Login {
   username: string;
   password: string;
 }
 
-export default class Auth extends Repository {
-  login(payload: Login) {
+class AuthService extends BaseService {
+  constructor() {
+    super('/auth')
+  }
+
+   login(payload: Login) {
     return this.axios.post(`/login`, payload)
   }
 
@@ -18,3 +22,5 @@ export default class Auth extends Repository {
     return this.axios.get(`/users/rujealfon`)
   }
 }
+
+export default new AuthService

@@ -1,10 +1,8 @@
-import Axios, { AxiosInstance } from 'axios'
-
-const baseURL = import.meta.env.VITE_GITHUB_URL
+import Axios from 'axios'
+import type { AxiosInstance} from 'axios'
 
 const axios: AxiosInstance = Axios.create({
-  baseURL,
-  timeout: 20000
+  baseURL: import.meta.env.VITE_GITHUB_URL
 })
 
 axios.interceptors.request.use(

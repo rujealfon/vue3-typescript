@@ -1,5 +1,5 @@
 // import { constant } from "@/constants/Constant";
-import { HTTPBaseService } from "@/services/api/base.service";
+import { HTTPBaseService } from "@/services/api/_base.service";
 
 export class UserProfileService extends HTTPBaseService {
     private static classInstance?: UserProfileService;
