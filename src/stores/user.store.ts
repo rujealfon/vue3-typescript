@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import AuthService from '@/services/api/auth.service';
+import AuthService from '@/services/api/auth.service'
 
 export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
-    users: ''
+    users: '',
   }),
   getters: {},
   actions: {
@@ -19,7 +19,6 @@ export const useUserStore = defineStore({
             reject(error)
           })
       })
-
-    }
-  }
+    },
+  },
 })

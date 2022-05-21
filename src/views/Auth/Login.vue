@@ -1,27 +1,29 @@
 <script setup lang="ts">
-  import { ref, reactive } from 'vue'
-  import { useAuthStore } from '@/stores/auth.store';
+import { ref, reactive } from 'vue'
+import { useAuthStore } from '@/stores/auth.store'
 
-  const authStore = useAuthStore()
-  let errorMessage = ref('')
-  const form = reactive({
-    email: '',
-    password: ''
-  })
+const authStore = useAuthStore()
+let errorMessage = ref('')
+const form = reactive({
+  email: '',
+  password: '',
+})
 
-  function submit() {
-    const payload = {
-      email: form.email,
-      password: form.password
-    }
-
-    authStore.login(payload).then((response: any) => {
-      sessionStorage.setItem('access_token', response.data.access_token)
-    }).catch(error => {
-      errorMessage.value = error?.response?.data?.message
-    })
+function submit() {
+  const payload = {
+    email: form.email,
+    password: form.password,
   }
 
+  authStore
+    .login(payload)
+    .then((response: any) => {
+      sessionStorage.setItem('access_token', response.data.access_token)
+    })
+    .catch((error) => {
+      errorMessage.value = error?.response?.data?.message
+    })
+}
 </script>
 
 <template>
@@ -33,11 +35,25 @@
     </div>
 
     <div class="form-floating">
-      <input v-model="form.email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" autocomplete="off">
+      <input
+        id="floatingInput"
+        v-model="form.email"
+        type="email"
+        class="form-control"
+        placeholder="name@example.com"
+        autocomplete="off"
+      />
       <label for="floatingInput">Email address</label>
     </div>
     <div class="form-floating">
-      <input v-model="form.password" type="password" class="form-control" id="floatingPassword" placeholder="Password" autocomplete="off">
+      <input
+        id="floatingPassword"
+        v-model="form.password"
+        type="password"
+        class="form-control"
+        placeholder="Password"
+        autocomplete="off"
+      />
       <label for="floatingPassword">Password</label>
     </div>
 

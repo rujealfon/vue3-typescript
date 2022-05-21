@@ -1,22 +1,22 @@
-import BaseService from "@/services/api/base.service"
-import type { Login } from "@/models/login.model"
+import BaseService from '@/services/api/base.service'
+import type { Login } from '@/models/login.model'
 
 class AuthService extends BaseService {
   constructor() {
     super('/auth')
   }
 
-   login(payload: Login) {
-    return this.axios.post(`${this.base}/login`, payload)
+  login(payload: Login) {
+    return this._axios.post(`${this.base}/login`, payload)
   }
 
   logout() {
-    return this.axios.get(`${this.base}/logout`)
+    return this._axios.get(`${this.base}/logout`)
   }
 
   user() {
-    return this.axios.get(`/users/rujealfon`)
+    return this._axios.get(`/users/rujealfon`)
   }
 }
 
-export default new AuthService
+export default new AuthService()

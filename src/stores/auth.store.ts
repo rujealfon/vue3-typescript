@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
-import AuthService from '@/services/api/auth.service';
-import type { Login } from '@/models/login.model';
+import AuthService from '@/services/api/auth.service'
+import type { Login } from '@/models/login.model'
 
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    token: ''
+    token: '',
   }),
   getters: {
-    getToken: (state) => state.token
+    getToken: (state) => state.token,
   },
   actions: {
     login(payload: Login) {
@@ -22,7 +22,6 @@ export const useAuthStore = defineStore({
             reject(error)
           })
       })
-
-    }
-  }
+    },
+  },
 })

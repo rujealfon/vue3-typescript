@@ -1,19 +1,14 @@
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
- import { useUserStore } from '@/stores/user.store';
+import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/stores/user.store'
 
- const user = useUserStore()
+const user = useUserStore()
 
 //
 
-
-
- onMounted(async () => {
-    console.log((await user.getUser()))
- })
-
-
-
+onMounted(async () => {
+  console.log(await user.getUser())
+})
 </script>
 
 <template>

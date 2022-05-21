@@ -1,30 +1,28 @@
-import axios from '@/services/api/axios.service';
+import axios from '@/services/api/axios.service'
 
-export default class BaseService {
-  protected axios = axios
+export default class RepositoryService {
+  protected _axios = axios
 
-  constructor(
-    public base: string
-  ) {}
+  constructor(public base: string) {}
 
   search(params) {
-    return this.axios.get(`${this.base}`, { params })
+    return this._axios.get(`${this.base}`, { params })
   }
 
-  detail(id: number) {
-    return this.axios.get(`${this.base}/${id}`)
+  detail(id) {
+    return this._axios.get(`${this.base}/${id}`)
   }
 
   create(payload) {
-    return this.axios.post(`${this.base}`, payload)
+    return this._axios.post(`${this.base}`, payload)
   }
 
   update(payload) {
-    return this.axios.put(`${this.base}/${payload.id}`, payload)
+    return this._axios.put(`${this.base}/${payload.id}`, payload)
   }
 
-  delete(id: number) {
-    return this.axios.delete(`${this.base}/${id}`)
+  delete(id) {
+    return this._axios.delete(`${this.base}/${id}`)
   }
 
   // restore(id) {
